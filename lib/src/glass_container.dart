@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:glass_kit/src/circle_clipper.dart';
+
 import 'border_painter.dart';
 import 'constants.dart';
 
@@ -363,7 +364,7 @@ class GlassContainer extends StatelessWidget {
       padding: padding,
       alignment: alignment,
       width: _isCircle ? height : width,
-      child: SizedBox.expand(child: current),
+      child: height != null ? SizedBox.expand(child: current) : current,
       decoration: BoxDecoration(
         shape: shape,
         color: color,

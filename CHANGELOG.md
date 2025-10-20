@@ -1,3 +1,6 @@
+## 4.0.3
+- Fix layout exception when using `GlassContainer` without fixed height inside scrollable widgets
+
 ## 4.0.2
 
 - Fix for inconsistent `borderRadius` handling
