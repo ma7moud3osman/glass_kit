@@ -349,10 +349,10 @@ class GlassContainer extends StatelessWidget {
 
   double? getHeight([BoxConstraints? constraints]) =>
       height ??
-      (constraints?.hasBoundedHeight ?? false ? constraints!.maxHeight : null);
+      (constraints?.hasBoundedHeight ?? false ? constraints!.minHeight : null);
   double? getWidth([BoxConstraints? constraints]) =>
       width ??
-      (constraints?.hasBoundedWidth ?? false ? constraints!.maxWidth : null);
+      (constraints?.hasBoundedWidth ?? false ? constraints!.minWidth : null);
 
   @override
   Widget build(BuildContext context) {
@@ -364,7 +364,9 @@ class GlassContainer extends StatelessWidget {
       padding: padding,
       alignment: alignment,
       width: _isCircle ? height : width,
-      child: height != null ? SizedBox.expand(child: current) : current,
+      child: height != null && width != null
+          ? SizedBox.expand(child: current)
+          : current,
       decoration: BoxDecoration(
         shape: shape,
         color: color,
@@ -403,7 +405,11 @@ class GlassContainer extends StatelessWidget {
     // Commbine the backdropFilter, frosted layer, and container into a stack
     current = Stack(
       alignment: Alignment.center,
-      children: [_backdropFilterContainer, _frostedContainer, current],
+      children: [
+        Positioned.fill(child: _backdropFilterContainer),
+        Positioned.fill(child: _frostedContainer),
+        current
+      ],
     );
 
     // Clip the current container depending on the shape
@@ -499,20 +505,12 @@ class _FrostedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: frostedOpacity,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return Image(
-            image: ResizeImage(
-              AssetImage(kNoiseImage, package: 'glass_kit'),
-              height: height?.toInt(),
-              width: width?.toInt(),
-            ),
-            excludeFromSemantics: true,
-            fit: BoxFit.cover,
-            color: kFrostBlendColor,
-            colorBlendMode: kFrostBlendMode,
-          );
-        },
+      child: Image(
+        image: AssetImage(kNoiseImage, package: 'glass_kit'),
+        excludeFromSemantics: true,
+        fit: BoxFit.cover,
+        color: kFrostBlendColor,
+        colorBlendMode: kFrostBlendMode,
       ),
     );
   }

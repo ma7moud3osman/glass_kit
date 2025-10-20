@@ -1,5 +1,7 @@
 ## 4.0.3
-- Fix layout exception when using `GlassContainer` without fixed height inside scrollable widgets
+
+- Fix infinite height/width constraint exceptions in scrollable and unbounded layouts.
+- Update frosted layer sizing logic to adapt to layout constraints instead of forcing full expansion.
 
 ## 4.0.2
 
